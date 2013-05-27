@@ -1,0 +1,23 @@
+{
+  "name": "node-oembedder",
+  "description": "A web service for extracting oembed content from a web page",
+  "version": "0.0.1",
+  "author": "Gene Hallman <gene@livefyre.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/genehallman/oembedder.git"
+  },
+  "dependencies": {
+    "forever":"*",
+    "request":"*",
+    "node-dev":"*",
+    "cheerio":"*"
+  },
+  "scripts": {
+    "start": "node_modules/node-dev/bin/node-dev src/index.js"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+}

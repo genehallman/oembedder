@@ -2,6 +2,7 @@ var requester = require('request');
 var http = require('http');
 var url = require('url');
 var cheerio = require('cheerio');
+var cache = {};
 
 var twitterRegex = /https*:\/\/twitter\.com\/.*\/status\/.*/;
     
@@ -14,11 +15,16 @@ var server = http.createServer(function (request, response) {
   }
   
   query.url = query.url + "/photo/1/large";
+  if (cache[query.url]) {
+    writeResult(response, cache[query.url]);
+  }
   
   requester(query.url, function(err, res, body) {
-    console.log("Got response: " + res.statusCode);
+    console.log("Got response: ", arguments);
     $ = cheerio.load(body);
-    writeResult(response, $('img.large').attr('src'));
+    var result = $('img.large').attr('src');
+    cache[query.url] = result;
+    writeResult(response, result);
   });
 });
 

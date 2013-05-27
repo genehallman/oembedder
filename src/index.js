@@ -10,7 +10,7 @@ var server = http.createServer(function (request, response) {
   var query = url_parts.query;
 
   if (!query.url || !query.url.match(twitterRegex)) {
-    return writeResult(response, "");
+    return writeResult(response);
   }
   
   query.url = query.url + "/photo/1/large";
@@ -23,8 +23,12 @@ var server = http.createServer(function (request, response) {
 });
 
 var writeResult = function(response, result) {
-  response.writeHead(200, {"Content-Type": "application/json"});
-  response.end("{\"url\": \""+result+"\"}");
+  if (result) {
+    response.writeHead(301, {"Content-Type": "application/json", "Location": result});
+  } else {
+    response.writeHead(400);
+  }
+  response.end();
   return true;
 };
 
